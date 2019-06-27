@@ -6,25 +6,39 @@
   
   This object stores a debug level threshold value, and each printing method 
   of this object takes a level argument. The message is printed if the level
-  argument is at least as large as the currently set threshold. 
+  argument is at least as large as the currently set threshold.
 
   The simplest and most useful method of this object is print(level, message), 
   which simply prints the message if level is at least as big as the threshold. 
   when(), unless(), and error() are convenience methods that call print. See
   the details.
   
+  The logger can also be used to fire assertions. More precisely, one can run
+  the following code:
+  
+  LOGGER.ASSERT = true;
+  myLogger = LOGGER.createLogger('assertiveLog')
+  myLogger.print(log.level.ERROR, 'error here!')
+  
+  This will throw an object {
+    message: 'assertiveLog [ERROR]: error here!'
+  }
+  
+  Without the line of code setting LOGGER.ASSERT to true, the same print statement
+  will simply print that message via console.log.
+  
   The invocation(lvl) method prints the currently running 
   function as it was invoked with default lvl = DEBUG. 
   For example, given the following code:
 
   function foo(A, B) {
-      log.invocation(log.level.INFO);
+      log.invocation(LOGGER.level.INFO);
   }
   let x = {bar: 'baz'};
   foo(3, x);
 
   The string "foo(3, {bar: 'baz'})" will be printed if the current threshold
-  of the logger is set to log.level.DEBUG or log.level.INFO. The invocation
+  of the logger is set to LOGGER.level.DEBUG or LOGGER.level.INFO. The invocation
   function will not work in strict mode, so it is automatically disabled in 
   that case. Alternative, invocation can be manually disabled by setting 
   LOGGER.STRICT = true.
