@@ -1,7 +1,8 @@
 /*
   This file defines a constructor for a logger object. The constructor takes
-  one argument, which is a function that defines how to print a string. Its 
-  default value is to print to the console (console.log(str)).
+  two arguments, the first of which is a name for the logger, and the second 
+  of which is a function that defines how to print a string. Its 
+  default value is to print to the console (str => console.log(str)).
   
   This object stores a debug level threshold value, and each printing method 
   of this object takes a level argument. The message is printed if the level
@@ -168,11 +169,3 @@ LOGGER.createLogger = function createLogger(name, printer) {
         invocation
     };
 };
-
-LOGGER.globalLog = LOGGER.createLogger('globalLog');
-//LOGGER.globalLog.setDebugLevel(LOGGER.level.INFO);
-LOGGER.globalLog.loading = function loading() {
-    let filename = document.currentScript.src.replace(/.*\//, '');
-    this.info(`loading ${filename}`);
-};
-LOGGER.globalLog.loading();
